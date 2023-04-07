@@ -16,7 +16,7 @@ const Signup = () => {
       location,
     };
 
-    fetch("https://gorgeous-slug-robe.cyclic.app/users/register", {
+    fetch("https://lime-encouraging-walkingstick.cyclic.app/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

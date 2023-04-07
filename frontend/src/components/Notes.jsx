@@ -3,24 +3,34 @@ import React, { useEffect, useState } from "react";
 const Notes = () => {
   const [notes, setNotes] = useState([]);
   const getData = async () => {
-    await fetch("https://gorgeous-slug-robe.cyclic.app/notes", {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => setNotes(res))
-      .catch((err) => console.log(err));
+    try {
+      const res = await fetch(
+        "https://lime-encouraging-walkingstick.cyclic.app/notes",
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      const data = await res.json();
+      setNotes(data);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const handleDelete = async (x) => {
     const arr = notes.filter((el) => el._id !== x._id);
     setNotes(arr);
-    await fetch(`https://gorgeous-slug-robe.cyclic.app/notes/delete/${x._id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    })
+    await fetch(
+      `https://lime-encouraging-walkingstick.cyclic.app/notes/delete/${x._id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    )
       .then((res) => res.json())
       .then((res) => console.log(res))
       .catch((err) => console.log(err));

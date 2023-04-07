@@ -10,7 +10,7 @@ const Login = () => {
       password,
     };
 
-    fetch("https://gorgeous-slug-robe.cyclic.app/users/login", {
+    fetch("https://lime-encouraging-walkingstick.cyclic.app/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
