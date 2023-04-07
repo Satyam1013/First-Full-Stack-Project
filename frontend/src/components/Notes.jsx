@@ -5,8 +5,7 @@ const Notes = () => {
   const [desc, setDesc] = useState("");
   const [sub, setSub] = useState("");
   const [notes, setNotes] = useState([]);
-  console.log(title, desc, sub);
-  console.log(notes);
+
   const getData = async () => {
     try {
       const res = await fetch(
@@ -30,25 +29,25 @@ const Notes = () => {
       description: desc,
       subject: sub,
     };
-
+    setNotes([...notes, payload]);
     fetch("https://lime-encouraging-walkingstick.cyclic.app/notes/add", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: localStorage.getItem("token"),
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
-    })
-      .then((res) => res.json())
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
-  const handleDelete = async (x) => {
-    const arr = notes.filter((el) => el._id !== x._id);
-    setNotes(arr);
-    await fetch(
-      `https://lime-encouraging-walkingstick.cyclic.app/notes/delete/${x._id}`,
+  const handleDelete = (el) => {
+    const arr = notes.filter((x) => x._id !== el._id);
+    setNotes([...arr]);
+    fetch(
+      `https://lime-encouraging-walkingstick.cyclic.app/notes/delete/${el._id}`,
       {
         method: "DELETE",
         headers: {
@@ -62,7 +61,7 @@ const Notes = () => {
   };
   useEffect(() => {
     getData();
-  }, [title, desc, sub]);
+  }, []);
   return (
     <>
       <div
@@ -122,4 +121,4 @@ const Notes = () => {
   );
 };
 
-export default Notes;
+export default React.memo(Notes);
